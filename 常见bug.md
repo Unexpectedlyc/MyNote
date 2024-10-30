@@ -77,3 +77,60 @@ git config --global --unset https.proxy
 git config --global --get http.proxy
 git config --global --get https.proxy
 ```
+
+## 4.端口未被占用，但是却提示端口无法使用
+
+**问题记录**
+
+**环境：Windows10**
+
+### 问题如下：
+
+> An attempt was made to access a [socket](https://so.csdn.net/so/search?q=socket&spm=1001.2101.3001.7020) in a way forbidden by its access permissions。
+
+1.通过`netstat -aon|findstr “3306”`并没有看到端口占用
+
+2.通过`netsh int ipv4 show dynamicport tcp`可以看到端口范围确实包含了3306端口
+
+> 协议 tcp 动态端口范围
+> 启动端口 : 1024
+> 端口数 : 16383
+
+### 原因
+
+考虑是系统“TCP动态端口起始端口”配置问题。
+
+### 解决步骤
+
+1. 以管理员身份运行CMD
+
+2. 关闭Hyper-V
+
+   执行命令：`dism.exe /Online /Disable-Feature:Microsoft-Hyper-V`
+
+   或采用传统方式，在控制面板的“程序与功能”中关闭。
+
+   （这步完成后不要关机）
+
+3. 修改动态端口范围
+
+   `netsh int ipv4 set dynamicport tcp start=49152 num=16383`
+
+   `netsh int ipv4 set dynamicport udp start=49152 num=16383`
+
+4. 检查结果
+
+   `netsh int ipv4 show dynamicport tcp`
+
+   > 协议 tcp 动态端口范围
+   > 启动端口 : 49152
+   > 端口数 : 16383
+
+5. 开启Hyper-V
+
+   `dism.exe /Online /Enable-Feature:Microsoft-Hyper-V /All`
+
+   输入`Y`确认重启计算机
+
+   
+
