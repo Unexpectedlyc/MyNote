@@ -31,11 +31,11 @@ Categories=Application;
 
 ```bash
 chmod 777 pycharm.desktop
-cp pycharm.desktop /home/marvin/Desktop/
+cp pycharm.desktop /home/$username/Desktop/
 
-cd /home/marvin/Desktop
+cd /home/$username/Desktop
 chmod 777 pycharm.desktop
-chown marvin:marvin pycharm.desktop
+chown $username:$password pycharm.desktop
 
 ```
 
