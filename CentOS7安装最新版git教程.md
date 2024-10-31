@@ -25,7 +25,7 @@ sudo yum install -y zlib-devel perl-ExtUtils-MakeMaker
 2.去官网下载最新版本的git源码包
 
 ```
-wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.9.0.tar.gz
+wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.47.0.tar.gz
 
 ```
 
@@ -34,8 +34,8 @@ wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.9.0.tar.gz
 3.接下来就是解压，配置，安装
 
 ```
-tar -zxvf git-2.9.0.tar.gz
-cd git-2.9.0
+tar -zxvf git-2.47.0.tar.gz
+cd git-2.47.0
 ./configure --prefix=/usr/local
 make
 sudo make install
