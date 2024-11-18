@@ -134,3 +134,50 @@ git config --global --get https.proxy
 
    
 
+## 5.“ERROR 1: PROJ: proj_create_from_database: Cannot find proj.db” 
+
+这通常是由于GDAL在获取图像的投影信息时找不到proj.db文件引起的。
+
+解决此问题的方法取决于您是使用conda还是pip安装的GDAL、PROJ和GEOS。下面提供了两种可能的解决方案：
+
+解决方案1：如何您之前使用了conda安装的GDAL、PROJ和GEOS
+
+打开命令提示符或Anaconda Prompt。
+执行以下命令配置GDAL环境变量：
+
+```
+setx GDAL_DATA "C:\Anaconda3\envs\your_env_name\Library\share\gdal"
+```
+
+或者在代码中添加
+
+```
+os.environ['GDAL_DATA'] = r'C:\Anaconda3\envs\your_env_name\Library\share\gdal'
+```
+
+或者在系统环境变量path中添加：
+
+```
+'C:\Anaconda3\envs\your_env_name\Library\share\gdal'
+```
+
+将上面命令中的 your_env_name 替换为您的conda环境名称。
+执行以下命令配置PROJ环境变量：
+
+```
+setx PROJ_LIB "C:\Anaconda3\envs\your_env_name\Library\share\proj"
+```
+
+或者在代码中添加
+
+```
+os.environ['PROJ_LIB'] = r“C:\Anaconda3\envs\network37\Library\share\proj"
+```
+
+或者在系统环境变量path中添加：
+
+```
+'C:\Anaconda3\envs\your_env_name\Library\share\proj'
+```
+
+同样，将上面命令中的 your_env_name 替换为您的conda环境名称。
