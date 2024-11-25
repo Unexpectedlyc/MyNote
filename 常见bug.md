@@ -181,3 +181,36 @@ os.environ['PROJ_LIB'] = r“C:\Anaconda3\envs\network37\Library\share\proj"
 ```
 
 同样，将上面命令中的 your_env_name 替换为您的conda环境名称。
+
+## 6.“RuntimeError: main thread is not in main loop“的几种解决方案
+
+#### 方法一（Tkinter）
+
+最后写
+
+```python
+root.mainloop()
+```
+
+当然，如果不是root，则应使用Tk对象的名称代替root。
+
+#### 方法二（多线程）
+
+将线程设置为守护程序
+
+```python
+t = threading.Thread(target=your_func)
+t.setDaemon(True)
+t.start()
+```
+
+daemon默认是False，将其设置为True，再Start，就可以解决问题。daemon为True，就是我们平常理解的后台线程，用Ctrl-C关闭程序，所有后台线程都会被自动关闭。如果daemon属性是False，线程不会随主线程的结束而结束，这时如果线程访问主线程的资源，就会出错。
+
+#### 方法三（matplotlib）
+
+```python
+# do this before importing pylab or pyplot
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+```
