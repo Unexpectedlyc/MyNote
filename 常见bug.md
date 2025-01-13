@@ -214,3 +214,35 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 ```
+
+## 7.关于windows安装wsl，出现WslRegisterDistribution failed with error: 0x8007019e The Windows Subsystem错误的解决方案
+
+![在这里插入图片描述](https://i-blog.csdnimg.cn/blog_migrate/771d32fe960d35aa1507bf914ba262bf.png#pic_center)
+
+### 解决方案
+
+首先需要安装windows的子系统支持
+步骤：
+1、win+x，选择windows + powershell（管理员）
+
+2、输入`Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux`（如下图所示）
+
+![在这里插入图片描述](https://i-blog.csdnimg.cn/blog_migrate/e63d2351e73dcc9bc1066aff3a09d990.png#pic_center)
+
+3、回车，输入Y或者y，然后系统重启
+
+4、重启后打开ubuntu18.04的图标之后，会进入设置流程
+
+### 其它问题解决方案
+
+##### 复制黏贴
+
+1、对wsl的terminal状态栏右键，选择属性（如下两张图）
+
+![在这里插入图片描述](https://i-blog.csdnimg.cn/blog_migrate/1d71af51f430d2bdfaaa17584284ea3b.png#pic_center)
+
+![在这里插入图片描述](https://i-blog.csdnimg.cn/blog_migrate/3dd6aa44a84264b4ec8affdb60b19d6b.png#pic_center)
+
+2、需要把【将Ctrl+Shift+C/V用作复制/黏贴的快捷键】的选项打勾
+
+![在这里插入图片描述](https://i-blog.csdnimg.cn/blog_migrate/6ce67961ccf8b21efe75a1d386951d25.png#pic_center)
