@@ -11,38 +11,57 @@ public SseEmitter knowledgeBaseChat(@RequestBody String paramJsonStringify,
     SseEmitter emitter = new SseEmitter();
     final AtomicBoolean completed = new AtomicBoolean(false); // 自定义完成标志
 
-    Thread thread = new Thread(() -> {
-        try {
-            HttpURLConnection connection = getHttpURLConnection();
+    Thread thread =
+        new Thread(
+        () -> {
+            try {
+                HttpURLConnection connection = getHttpURLConnection();
 
-            try (OutputStream os = connection.getOutputStream()) {
-                os.write(paramJsonStringify.getBytes(StandardCharsets.UTF_8));
-                os.flush();
-            }
-
-            int responseCode = connection.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
-                String line;
-
-                while ((line = reader.readLine()) != null && !completed.get()) {
-                    if (line.isEmpty()) continue;
-                    log.info("Stream data received: {}", line);
-                    emitter.send(SseEmitter.event().data(line).id("").name("message"));
+                try (OutputStream os = connection.getOutputStream()) {
+                    os.write(paramJsonStringify.getBytes(StandardCharsets.UTF_8));
+                    os.flush();
                 }
-                reader.close();
-                emitter.complete();
-                completed.set(true); // 设置完成标志
-            } else {
-                emitter.completeWithError(new RuntimeException("Third-party API returned an error: " + responseCode));
+
+                int responseCode = connection.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    BufferedReader reader =
+                        new BufferedReader(
+                        new InputStreamReader(
+                            connection.getInputStream(), StandardCharsets.UTF_8));
+                    String line;
+
+                    while ((line = reader.readLine()) != null && !completed.get()) {
+                        if (line.isEmpty()) {
+                            continue;
+                        }
+                        // 处理每一行的JSON数据,加入uuid字段
+                        try {
+                            JsonNode jsonNode = objectMapper.readTree(line.replaceAll("data: ", ""));
+                            ((ObjectNode) jsonNode).put("uuid", uuid); // 添加uuid字段
+                            line = objectMapper.writeValueAsString(jsonNode); // 将修改后的JSON对象转换回字符串
+                        } catch (Exception e) {
+                            log.error("Error processing JSON line: ", e);
+                            //emitter.completeWithError(e);
+                            //completed.set(true);
+                            continue;
+                        }
+                        log.info("Stream data received: {}", line);
+                        emitter.send(SseEmitter.event().data(line).id("").name("message"));
+                    }
+                    reader.close();
+                    emitter.complete();
+                    completed.set(true); // 设置完成标志
+                } else {
+                    emitter.completeWithError(
+                        new RuntimeException("Third-party API returned an error: " + responseCode));
+                    completed.set(true); // 设置完成标志
+                }
+            } catch (Exception e) {
+                emitter.completeWithError(e);
+                log.error("Error occurred during stream processing: ", e);
                 completed.set(true); // 设置完成标志
             }
-        } catch (Exception e) {
-            emitter.completeWithError(e);
-            log.error("Error occurred during stream processing: ", e);
-            completed.set(true); // 设置完成标志
-        }
-    });
+        });
 
     thread.start();
 
