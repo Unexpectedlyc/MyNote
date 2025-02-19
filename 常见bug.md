@@ -249,4 +249,4 @@ import matplotlib.pyplot as plt
 
 ## 8.cannot import name 'shard_checkpoint' from 'transformers.modeling_utils'
 
-transformers包版本大于 4.47，将peft这个包升级为0.14.0，将sentence-transformers升级为3.4.1
+transformers包版本 4.49，将peft这个包升级为0.14.0，将sentence-transformers升级为3.4.1
