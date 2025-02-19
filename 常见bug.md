@@ -246,3 +246,7 @@ import matplotlib.pyplot as plt
 2、需要把【将Ctrl+Shift+C/V用作复制/黏贴的快捷键】的选项打勾
 
 ![在这里插入图片描述](https://i-blog.csdnimg.cn/blog_migrate/6ce67961ccf8b21efe75a1d386951d25.png#pic_center)
+
+## 8.cannot import name 'shard_checkpoint' from 'transformers.modeling_utils'
+
+transformers包版本大于 4.47，将peft这个包升级为0.14.0，将sentence-transformers升级为3.4.1
