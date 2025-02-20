@@ -250,3 +250,10 @@ import matplotlib.pyplot as plt
 ## 8.cannot import name 'shard_checkpoint' from 'transformers.modeling_utils'
 
 transformers包版本 4.49，将peft这个包升级为0.14.0，将sentence-transformers升级为3.4.1
+
+### 9.xinference.api.restful_api KeyError: ‘model.embed_tokens.weight‘
+
+使用xinference运行qwen2选择8B量化运行时报错：[KeyError](https://so.csdn.net/so/search?q=KeyError&spm=1001.2101.3001.7020): [address=127.0.0.1:59995, pid=14340] 'model.embed_tokens.weight'
+
+原因是：xinference在使用指定量化时，只能运行[bin文件](https://so.csdn.net/so/search?q=bin文件&spm=1001.2101.3001.7020)。而运行时生成的是safetensors文件
+
