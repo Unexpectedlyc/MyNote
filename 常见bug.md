@@ -348,3 +348,13 @@ def shard_checkpoint(
     return shards, index
 ```
 
+## 11.关闭deepseekR1深度思考
+
+[Help: 在ollama上运行时, 怎么才能让它不返回标签 ? When running on ollama, how can I make it not return the < think > tag? · Issue #23 · deepseek-ai/DeepSeek-R1](https://github.com/deepseek-ai/DeepSeek-R1/issues/23)github相关issue
+
+vllm 已经支持了
+https://docs.vllm.ai/en/latest/features/reasoning_outputs.html
+
+亲测
+`vllm serve /mnt/nas/deepseek-ai/DeepSeek-R1-Distill-Qwen-32B/ --dtype auto --port 8000 --tensor-parallel-size 2 --gpu-memory-utilization 0.95 --served-model-name Qwen-14B-Chat --max-model-len 32000 --enable-reasoning --reasoning-parser deepseek_r1`
+可行
