@@ -358,3 +358,20 @@ https://docs.vllm.ai/en/latest/features/reasoning_outputs.html
 亲测
 `vllm serve /mnt/nas/deepseek-ai/DeepSeek-R1-Distill-Qwen-32B/ --dtype auto --port 8000 --tensor-parallel-size 2 --gpu-memory-utilization 0.95 --served-model-name Qwen-14B-Chat --max-model-len 32000 --enable-reasoning --reasoning-parser deepseek_r1`
 可行
+
+## 12.GLM-4V-9B TypeError: ChatGLMTokenizer._pad() got an unexpected keyword argument ‘padding_side‘
+
+在模型文件 `glm-4v-9b/tokenization_chatglm.py` 中，在 `def _pad()` 方法中增加参数如下。
+
+```python
+def _pad(
+            self,
+            encoded_inputs: Union[Dict[str, EncodedInput], BatchEncoding],
+            max_length: Optional[int] = None,
+            padding_strategy: PaddingStrategy = PaddingStrategy.DO_NOT_PAD,
+            padding_side:Optional[str] =None,#增加这个
+            pad_to_multiple_of: Optional[int] = None,
+            return_attention_mask: Optional[bool] = None,
+    ) -> dict:
+```
+
