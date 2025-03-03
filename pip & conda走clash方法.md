@@ -21,3 +21,9 @@ proxy_servers:
 ```
 
 其中127.0.0.1:7890是实际的代理端口
+
+取消所有源，替换为默认
+
+```text
+pip config unset global.index-url
+```
