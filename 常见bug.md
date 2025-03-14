@@ -375,3 +375,58 @@ def _pad(
     ) -> dict:
 ```
 
+## 13.centos安装gmpy2
+
+在CentOS上安装gmpy2库需要一些步骤，因为gmpy2依赖于一些底层的数学库如GMP、MPFR和MPC。以下是详细的步骤：
+
+更新系统软件包：
+首先确保你的系统软件包是最新的。
+
+```
+sudo yum update -y
+```
+
+安装依赖库：
+安装gmpy2所需的开发工具和库。你需要安装GCC编译器以及GMP、MPFR和MPC库。
+
+```
+sudo yum groupinstall "Development Tools" -y
+sudo yum install gmp-devel mpfr-devel libmpc-devel python3-devel -y
+```
+
+安装依赖：
+确保已安装GMP和MPFR，因为MPC依赖于这两个库。
+
+```
+sudo yum install gmp-devel mpfr-devel
+```
+
+下载MPC源码：
+访问MPC项目的官方网站或其GitHub页面找到最新版本的源码包，或者直接使用wget下载，例如：
+
+```
+wget https://ftp.gnu.org/gnu/mpc/mpc-1.3.1.tar.gz
+```
+
+解压源码包：
+
+```
+tar -xzf mpc-1.3.1.tar.gz
+cd mpc-1.3.1
+```
+
+配置、编译和安装：
+运行以下命令进行配置、编译和安装MPC。你可以通过--prefix指定安装路径，这里以默认路径为例。
+
+```
+./configure
+make
+sudo make install
+```
+
+安装gmpy2：
+
+```
+pip3 install gmpy2
+```
+

@@ -81,13 +81,15 @@ private HttpURLConnection getHttpURLConnection() throws IOException {
 }
 ```
 
-JS版本
+## JS版本
 
 ```javascript
 fetch(url, {
     method: 'POST',
     headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+        uuid: this.curEyeApp.appUuid
     },
     body: JSON.stringify(data)
 })
@@ -95,7 +97,7 @@ fetch(url, {
     if (!response.ok) {
         that.updateItemText(
             that.currentConversations.contents[that.currentConversations.contents.length - 1],
-            '网络错误，请检查服务是否正常'
+            that.$t('appBulider.manager.neterror')
         )
         that.curInputIcon = that.inputIcon.unallowsend
         that.isDialoging = false
@@ -110,48 +112,58 @@ fetch(url, {
         reader
             .read()
             .then(({ done, value }) => {
-            if (!that.isDialoging) {
-                that.curInputIcon = that.inputIcon.unallowsend
-                return
-            }
-            if (done) {
-                that.updateConversation(that.currentConversations)
+            if (!that.isDialoging || done) {
                 that.curInputIcon = that.inputIcon.unallowsend
                 that.isDialoging = false
-                that.streamText.replace('\n', '\n\n')
-                // console.log('Stream complete.')
+                if (done) {
+                    that.updateConversation(that.currentConversations)
+                    that.streamText = that.streamText.replace('\n', '\n\n')
+                }
                 return
             }
             const chunk = decoder.decode(value, { stream: true })
-            let streamData = chunk.replace('data:', '')
-            if (isFirstChunk) {
-                streamData = JSON.parse(streamData)
-                for (const item of streamData.docs) {
-                    that.streamText = that.streamText + item
-                    that.updateItemText(
-                        that.currentConversations.contents[that.currentConversations.contents.length - 1],
-                        that.streamText
-                    )
-                }
-                isFirstChunk = false
-            }
-            // 实时输出接收到的文本块
 
-            try {
-                streamData = JSON.parse(streamData)
-                that.streamText = that.streamText + streamData.choices[0].delta.content || ''
-                that.updateItemText(
-                    that.currentConversations.contents[that.currentConversations.contents.length - 1],
-                    that.streamText
-                )
-            } catch (err) {
-                console.log(streamData)
-            }
-            // 继续读取下一个块
-            readStream()
+            // 解析所有顶层JSON对象
+            const dataList = parseAllTopLevelJSONObjects(chunk)
+
+            dataList.forEach(streamData => {
+                if (isFirstChunk) {
+                    if (streamData.docs) {
+                        streamData.docs.forEach(item => {
+                            if (item.includes('span')) {
+                                const index = that.currentConversations.contents.length - 1
+                                that.currentConversations.contents[index].docs = item
+                            } else {
+                                that.streamText += item + '\n'
+                                that.updateItemText(
+                                    that.currentConversations.contents[that.currentConversations.contents.length - 1],
+                                    that.streamText
+                                )
+                            }
+                        })
+                    }
+                    isFirstChunk = false
+                }
+
+                try {
+                    if (streamData.choices && streamData.choices[0] && streamData.choices[0].delta) {
+                        that.streamText += streamData.choices[0].delta.content || ''
+                        that.updateItemText(
+                            that.currentConversations.contents[that.currentConversations.contents.length - 1],
+                            that.streamText
+                        )
+                    }
+                } catch (err) {
+                    console.error('Error processing JSON data:', err)
+                }
+            })
+
+            readStream() // 继续读取下一个块
         })
             .catch(error => {
             console.error('Error reading stream:', error)
+            that.curInputIcon = that.inputIcon.unallowsend
+            that.isDialoging = false
         })
     }
 
