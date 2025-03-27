@@ -4,7 +4,7 @@
 
 当之前安装过低版本的Ubuntu系统，或者是再交安装Ubuntu时，由于之前安装过VMware Tools，因此，虚拟机的菜单栏处是无法点击的，如下图所示：
 
-![img](https://pic2.zhimg.com/v2-a79146ea7bda51b42cb644b1fcde17cf_b.jpg)
+![ubuntu安装图](https://pic2.zhimg.com/v2-a79146ea7bda51b42cb644b1fcde17cf_b.jpg)
 
 此时，需要先卸载ubuntu中的vmware tools工具后，才能重新安装。在Ubuntu中点击右键，打开终端，输入卸载指令即可，卸载执行代码如下：
 
