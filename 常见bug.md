@@ -430,3 +430,28 @@ sudo make install
 pip3 install gmpy2
 ```
 
+## 14.解决：Could not find library geos_c or load any of its variants [‘libgeos_c.so.1‘, ‘libgeos_c.so‘]
+
+### 错误：
+
+```bash
+OSError: Could not find library geos_c or load any of its variants ['libgeos_c.so.1', 'libgeos_c.so']
+```
+
+### 原因：
+
+```bash
+# Linux系统安装shapely后
+pip3 install shapely
+```
+
+
+
+### 解决方法：
+
+```bash
+# ubuntu系统执行：
+sudo apt-get install libgeos-dev
+# CentOS系统执行：
+sudo yum install geos-devel
+```
