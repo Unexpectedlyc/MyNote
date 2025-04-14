@@ -455,3 +455,24 @@ sudo apt-get install libgeos-dev
 # CentOS系统执行：
 sudo yum install geos-devel
 ```
+
+## 15.python39 gradio启动 报错 TypeError: argument of type ‘bool‘ is not iterable
+
+```
+# pydantic版本问题，安装此版本
+pip install pydantic==2.10.6
+```
+
+## 16.Linux下Gradio无法launch的解决方案
+
+需要下载frcp，并放到gradio的目录下
+
+>Could not create share link. Missing file: /home/gabriel/.local/lib/python3.9/site-packages/gradio/frpc_linux_aarch64_v0.2.  
+Please check your internet connection. This can happen if your antivirus software blocks the download of this file. You can install manually by following these steps:  
+```
+1. Download this file: https:*//cdn-media.huggingface.co/frpc-gradio-0.2/frpc_linux_aarch64* 
+2. Rename the downloaded file to: frpc_linux_aarch64_v0.2 
+3. Move the file to this location:/home/gabriel/.local/lib/python3.9/site-packages/gradio
+```
+
+frpc_linux_aarch64名称不对，应该是frpc_linux_arm64
