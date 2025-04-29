@@ -69,6 +69,47 @@ gcc --version
 g++ --version
 ```
 
+#### 1 **检查环境变量配置**
+
+- 在终端中输入：
+
+```bash
+echo $PATH
+```
+
+- 显示：![img](https://i-blog.csdnimg.cn/direct/c6f52da41d944b21a0a784bb5909feb5.png)
+- 并没有找到gcc，说明未添加到环境变量，那咱添加一手环境变量：
+
+
+
+#### 2 找到gcc的路径
+
+- 输入：
+
+```bash
+which gcc
+```
+
+- 看看返回值：
+
+![img](https://i-blog.csdnimg.cn/direct/1372a6e3fafa44b18d6a31a65343f698.png)
+
+- 记下gcc的路径
+
+
+
+#### 3 添加gcc路径到Linux环境变量
+
+- 在终端中输入并执行**vim ~/.bashrc**命令，用**vim**工具进入**~/.bashrc**文件
+- 光标选到文件最后一个字符，输入**o**命令在光标下插入新行，进入编辑模式，在最后一行加上以下环境变量↓
+
+```bash
+export PATH=$PATH:/usr/bin/gcc
+```
+
+- 单击**esc**键退出编辑模式，输入**:wq**保存修改后退出vim窗口
+- 输入source ~/.bashrc命令更新bashrc文件，重启shell终端
+
 ### 3.编译和运行C程序：
 
 代码如下
