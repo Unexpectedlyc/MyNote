@@ -476,3 +476,28 @@ Please check your internet connection. This can happen if your antivirus softwar
 ```
 
 frpc_linux_aarch64名称不对，应该是frpc_linux_arm64
+
+## 17.Fix patch error "Hunk #* FAILED at * (different line endings)
+
+Apply Patch的时候后有时候会遇到诡异的问题，明明patch是对的，却打不上，提示如下错误：
+
+```
+Fix patch error "Hunk #* FAILED at * (different line endings)"
+```
+
+有一种可能是Windows和Uinix的文件line ending不同导致的，如果你是工作在Linux上，一个行之有效的解决方法是把Windows格式(dos)的文件转换为Unix
+
+```bash
+$ apt install -y dos2unix
+$ dos2unix <file_name>                           #把指定文件转为unix格式     
+$ find . -type f -exec dos2unix {} \;           #把当前目录下所有的文件转为unix格式
+```
+
+如果转化格式后，还打不上patch，可以提交修改之后再试，一般就可以成功了
+
+```bash
+$ git add .
+$ git commit -m "<your comment>"
+$ git am <your_patch>
+```
+
