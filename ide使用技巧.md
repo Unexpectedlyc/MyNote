@@ -34,3 +34,19 @@ Get-Content extensions.txt | ForEach-Object { code --install-extension $_ }
 - 确保代理服务器正常可用
 - 确保代理服务器地址和端口号正确
 - 如果代理需要身份验证，可能还需要在设置文件中添加 http.proxyAuthorization
+
+## 3.VSCODE远程连接服务器配置
+
+```
+Host huawei
+    HostName 27.18.114.8
+    User root
+    Port 40089
+
+Host 910b
+    HostName 27.17.114.33
+    User root
+    Port 22022
+    IdentityFile "C:/Users/Administrator/.ssh/KeyPair-0425.pem"
+```
+
