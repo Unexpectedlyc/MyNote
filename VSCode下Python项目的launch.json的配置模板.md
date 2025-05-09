@@ -89,6 +89,33 @@ $ python -m torch.distributed.launch --nproc_per_node=2 tools/train.py --model b
 }
 ```
 
+```bash
+// 或者下面这种写法
+{
+	// Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [ 
+        {
+            "name": "Python: 当前文件",
+            "type": "python",
+            "request": "launch",
+            // "program": "/root/ModelZoo-PyTorch/PyTorch/built-in/cv/detection/YOLOV9_for_PyTorch/train_dual.py", //注意 这里不要设置program
+      		"module": "torch.distributed.run", // 用torchrun 重点是这一行
+            "console": "integratedTerminal",
+            "args": [
+                "--nproc_per_node=1",
+                "tools/train.py",
+                "--model",
+                "bisenetv1",
+            ],
+            "env": {"CUDA_VISIBLE_DEVICES":"0"},
+        }
+    ]
+}
+```
+
 其中，program参数用于设置使用torch分布式包中的launch.py文件来作为启动脚本，具体路径请参照具体的torch安装路径来修改。args用于设置每个参数。env用于设置环境变量。具体debug时，建议只用1个GPU来进行调试，所以nproc_per_node设置为1，CUDA_VISIBLE_DEVICES设置为0。
 
 到这里如果直接按F5调式运行，可以勉强运行起来，如下所示：
@@ -148,3 +175,4 @@ nvidia-smi
 ![img](https://i-blog.csdnimg.cn/blog_migrate/ea186b6f458af015679b5872df65b7da.png)
 
 这个时候可以看到我的4块GPU中的第1块已经高负荷运行起来了，而且我也可以在VS Code中顺利的进行单步debug了。
+
