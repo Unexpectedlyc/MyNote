@@ -501,3 +501,44 @@ $ git commit -m "<your comment>"
 $ git am <your_patch>
 ```
 
+## 18.Git忽略文件和操作系统尾部换行符问题
+
+说我正在提交一个CRLF文件到仓库上，问我要怎么处理，这个CRLF其实是不同操作系统的尾部换行符的格式，CRLF是Carriage Return Line Feed的缩写，中文意思是回车换行，LF是Line Feed的缩写，中文意思是换行
+
+假如你正在Windows上写程序，又或者你正在和其他人合作，他们在Windows上编程，而你却在其他系统上，在这些情况下，就可能会遇到行尾结束符问题，这是因为Windows使用回车和换行两个字符来结束一行，而Mac和Linux只使用换行符一个字符。虽然这是小问题，但它会极大地扰乱跨平台协作，在提交时产生非常多的冲突
+
+对于不同的平台，有不同的处理方案：
+
+1. Git可以在你提交时自动地把行结束符CRLF转换成LF，而在签出代码时把LF转换成CRLF。设置core.autocrlf来打开此项功能，如果是在Windows系统上，就把它设置成true，这样当签出代码时，LF会被转换成CRLF：
+
+   ```csharp
+   $ git config --global core.autocrlf true
+   ```
+
+2. Linux或Mac系统使用LF作为行结束符，因此你不想Git在签出文件时进行自动的转换；当一个以CRLF为行结束符的文件不小心被引入时你肯定想进行修正，把core.autocrlf设置成input来告诉Git在提交时把CRLF转换成LF，签出时不转换：
+
+   ```python
+   $ git config --global core.autocrlf input
+   ```
+
+这样会在Windows系统上的签出文件中保留CRLF，会在Mac和Linux系统上，包括仓库中保留LF。
+
+1. 如果你是Windows程序员，且正在开发仅运行在Windows上的项目，可以设置false取消此功能，把回车符记录在库中：
+
+   ```csharp
+   $ git config --global core.autocrlf false
+   ```
+
+   上面三条总结起来就是下面的情形，x是你当前使用的系统所使用的换行方式
+
+```cobol
+1) true:             x -> LF -> CRLF
+2) input:            x -> LF -> LF
+3) false:            x -> x -> x
+项目已经存在换行符不同的问题的解决方案：
+```
+
+- 如果当前开发有多个分支且各分支不同步，需要每个分支进行一次转换
+- 如果只有一个分支或多个分支处于同一节点。可以从master切换一个新分支，进行转换，然后commit ，将此分支合并到所有分支。
+- 将修改过的分支push到gitlab，让其他成员更新代码即可。
+- Ps:由于每个人系统不同或者就是git的问题，可能出现更新完代码换行符不变，这时以服务器上的代码为准重新clone一份最新代码即可
