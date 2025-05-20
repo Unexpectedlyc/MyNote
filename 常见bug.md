@@ -542,3 +542,50 @@ $ git am <your_patch>
 - 如果只有一个分支或多个分支处于同一节点。可以从master切换一个新分支，进行转换，然后commit ，将此分支合并到所有分支。
 - 将修改过的分支push到gitlab，让其他成员更新代码即可。
 - Ps:由于每个人系统不同或者就是git的问题，可能出现更新完代码换行符不变，这时以服务器上的代码为准重新clone一份最新代码即可
+
+## 19.解决 geos_c.dll 缺失问题
+在使用 *pip install shapely* 安装 Shapely 库后，可能会遇到缺少 *geos_c.dll* 文件的错误。这通常是因为安装不完全导致的。
+
+```
+Could not find module 'C:\Users\Administrator\anaconda3\Library\bin\geos_c.dll' (or one of its dependencies). Try using the full path with constructor syntax
+```
+
+解决方法
+
+1. 使用 Conda 安装 Shapely
+
+最简单的方法是使用 Conda 来安装 Shapely，这样可以避免缺少 *geos_c.dll* 文件的问题[1]
+
+```
+conda install shapely
+```
+
+2. 手动下载并放置 geos_c.dll
+
+如果你已经使用 *pip* 安装了 Shapely，但仍然遇到错误，可以手动下载 *geos_c.dll* 文件并将其放置在 Anaconda 的 Library/bin 目录下
+
+**步骤如下：**
+1. 访问 [dll-files.com](https://www.dll-files.com/geos_c.dll.html) 下载 *geos_c.dll* 文件。
+2. 解压下载的文件。
+3. 将 *geos_c.dll* 文件复制到 *C:\Users\Administrator\anaconda3\Library\bin* 目录下。
+4. 重新导入 Shapely 包。
+
+通过以上方法，你应该能够解决 *geos_c.dll* 缺失的问题，并成功运行 Shapely 库。
+
+## 20.xinference启动报错Cluster is not available after multiple attempts
+
+```bash
+File "D:\devtools\anaconda3\envs\xrb\lib\site-packages\xinference\deploy\local.py", line 123, in main
+raise RuntimeError("Cluster is not available after multiple attempts")
+RuntimeError: Cluster is not available after multiple attempts
+```
+
+```bash
+windows系统配置了如下环境变量解决了问题：
+XINFERENCE_DISABLE_HEALTH_CHECK=1
+XINFERENCE_DISABLE_METRICS=1
+XINFERENCE_HEALTH_CHECK_ATTEMPTS=18
+XINFERENCE_HEALTH_CHECK_INTERVAL=30
+XINFERENCE_HEALTH_CHECK_TIMEOUT=30
+```
+
