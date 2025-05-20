@@ -589,3 +589,28 @@ XINFERENCE_HEALTH_CHECK_INTERVAL=30
 XINFERENCE_HEALTH_CHECK_TIMEOUT=30
 ```
 
+## 21.xinference自1.5.1版本后Drop internal compression logic for `transformers` quantization, using bnb config instead
+
+详情查看下面链接
+
+[REF: Drop internal compression logic for `transformers` quantization, using bnb config instead by ChengjieLi28 · Pull Request #3324 · xorbitsai/inference](https://github.com/xorbitsai/inference/pull/3324)
+
+新版`transformers` quantization eg:
+
+> [!NOTE]
+>
+> 1.Remove internal compression logic for quantization in transformers engine
+> 2.Remove all 4-bit and 8-bit in model specs in json. Now when model_format == "pytorch", only "none" quantization is provided by default.
+> Now if you want to do quantization in transformers engine:
+>
+> See: https://huggingface.co/docs/transformers/en/main_classes/quantization#transformers.BitsAndBytesConfig for all the options.
+>
+> 3.Fix issues that all the vision / audio models cannot use transformers bnb quantization.
+
+```python
+
+model_uid = client.launch_model(
+...
+quantization_config={"load_in_4bit": True}
+)
+```
