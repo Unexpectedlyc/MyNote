@@ -249,7 +249,7 @@ import matplotlib.pyplot as plt
 
 ## 8.cannot import name 'shard_checkpoint' from 'transformers.modeling_utils'
 
-transformers包版本 4.49，将peft这个包升级为0.14.0，将sentence-transformers升级为3.4.1
+transformers包版本 4.46.3，将peft这个包升级为0.14.0，将sentence-transformers升级为3.4.1，autoawq为0.2.5
 
 ## 9.xinference.api.restful_api KeyError: ‘model.embed_tokens.weight‘
 
