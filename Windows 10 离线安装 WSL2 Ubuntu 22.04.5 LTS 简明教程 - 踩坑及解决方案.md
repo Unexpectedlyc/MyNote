@@ -20,21 +20,7 @@ wsl --install -d Ubuntu-22.04
 - **硬件虚拟化**：在 BIOS/UEFI 中启用 **Intel VT-x/AMD-V**
 - **存储空间**：至少 5GB 空闲空间（建议 SSD）
 
-### 2. **启用 WSL 功能**
-
-```text
-powershell
-Copy
-
-# 以管理员身份运行 PowerShell 
-dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart 
-dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart 
-wsl --set-default-version 2 
-
-Restart-Computer
-```
-
-### 3. 手动启用必需的 Windows 功能
+### 2. 手动启用必需的 Windows 功能
 
 1. **启用“虚拟机平台”与“适用于 Linux 的 Windows 子系统”**
 
@@ -57,7 +43,37 @@ Restart-Computer
 
 ### **二、手动下载 Ubuntu WSL 镜像**
 
-### 1. **获取官方镜像**
+### 1.下载 Linux 内核更新包
+
+Linux 内核更新包安装最新版本的 [WSL 2 Linux 内核](https://github.com/microsoft/WSL2-Linux-Kernel)，以便在 Windows 操作系统映像中运行 WSL。 要从 Microsoft Store [运行](https://learn.microsoft.com/zh-cn/windows/wsl/compare-versions#wsl-in-the-microsoft-store)WSL，并使用更频繁发布的更新，请使用 `wsl.exe --install` 或 `wsl.exe --update`。
+
+1. 下载最新的包：
+
+   - [WSL2 Linux 内核更新包适用于 x64 计算机](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi)
+
+    备注
+
+   如果使用 ARM64 计算机，请改为下载 [ARM64 包](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_arm64.msi)。 如果不确定拥有哪种计算机，请打开命令提示符或 PowerShell 并输入：`systeminfo | find "System Type"`。 **注意事项：** 非英语 Windows 版本中，可能需要修改搜索文本，翻译“系统类型”字符串。 你可能还需要对引号进行转义来用于 find 命令。 例如，在德语版中使用 `systeminfo | find '"Systemtyp"'`。
+
+2. 运行在上一步中下载的更新包。 （双击以运行 - 系统会提示你输入提升的权限，选择“是”以批准此安装。
+
+安装完成后，转到下一步 - 在安装新的 Linux 分发版时将 WSL 2 设置为默认版本。 （如果希望将新的 Linux 安装设置为 WSL 1，请跳过此步骤）。
+
+ 备注
+
+有关详细信息，请参阅 [Windows 命令行博客](https://devblogs.microsoft.com/commandline/wsl2-will-be-generally-available-in-windows-10-version-2004)上的文章[对更新 WSL2 Linux 内核的更改](https://aka.ms/cliblog)。
+
+### 2. 将 WSL 2 设置为默认版本
+
+打开 PowerShell 并运行以下命令，在安装新的 Linux 分发版时将 WSL 2 设置为默认版本：
+
+PowerShell复制
+
+```powershell
+wsl --set-default-version 2
+```
+
+### 2. **获取官方镜像**
 
 - **下载地址**：
   [Ubuntu 22.04 WSL ](https://learn.microsoft.com/en-us/windows/wsl/)- Windows Subsystem for Linux Documentation
@@ -65,7 +81,7 @@ Restart-Computer
   - [Ubuntu 22.04.5 LTS - Free download and install on Windows | Microsoft Store](https://link.zhihu.com/?target=https%3A//apps.microsoft.com/detail/9pn20msr04dw%3Fhl%3Den-us%26gl%3DNZ)
   - [Ubuntu 22.04 LTS](https://link.zhihu.com/?target=https%3A//aka.ms/wslubuntu2204)（我所安装版本的文件直接下载路径）
 
-### 2. **保存镜像文件**
+### 3. **保存镜像文件**
 
 将下载的 `Ubuntu2204-221101.AppxBundle` 保存至本地路径（如 `C:\wsl\`）。
 
