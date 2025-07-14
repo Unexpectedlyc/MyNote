@@ -94,6 +94,8 @@ cd C:\wsl\
 
 ### 3. 导航到下载文件夹
 
+可以直接双击安装包安装。也可以命令行
+
 输入以下命令并回车：
 
 ```text
@@ -103,19 +105,17 @@ Add-AppxPackage .\Ubuntu2204-221101.AppxBundle
 
 这将安装 `Ubuntu 22.04`。
 
-**⚠️ 注意事项**
-
-1. **必须用管理员权限** 打开 PowerShell，否则可能会遇到权限问题。
-2. **确保文件名正确**，可以用 `ls` 或 `dir` 命令列出下载目录中的文件：powershell
-   CopyEdit
-   `dir`
-   如果文件名有错误，可以用 `Tab` 键自动补全。
-3. **如果失败，可以尝试旁加载**：
-
-- **打开 Windows 设置** → **Apps** → **Apps & Features**
-- **找到 “Sideload apps”** 选项并启用
-
-
+> [!NOTE]
+>
+> 1. **必须用管理员权限** 打开 PowerShell，否则可能会遇到权限问题。
+> 2. **确保文件名正确**，可以用 `ls` 或 `dir` 命令列出下载目录中的文件：powershell
+>    CopyEdit
+>    `dir`
+>    如果文件名有错误，可以用 `Tab` 键自动补全。
+> 3. **如果失败，可以尝试旁加载**：
+>
+> - **打开 Windows 设置** → **Apps** → **Apps & Features**
+> - **找到 “Sideload apps”** 选项并启用
 
 安装成功后，你可以在**开始菜单**搜索 `Ubuntu 22.04`，然后运行它！
 
@@ -144,6 +144,18 @@ Add-AppxPackage -Register C:\Users\zhtom\Downloads\Ubuntu2204-221101.AppxBundle
 
 
 **至此Ubuntu 22.04 已成功安装！** 如果你现在正在进行 **WSL（Windows Subsystem for Linux）** 的**首次初始化**。目前，它要求你**创建一个默认的 UNIX 用户账户**，这个账户将用于 WSL 中的日常操作。
+
+> [!IMPORTANT]
+>
+> [无法将磁盘“D:\wsl-ubuntu20.04\ext4.vhdx”附加到 WSL2： 系统找不到指定的路径。 Error code: Wsl/Service/CreateInstance/MountVhd/HCS/ERROR_PATH_NOT_FOUND Press any key to continue.](https://www.cnblogs.com/zhangzi/p/18429536)
+>
+> 这个错误通常是由于磁盘文件路径不正确或文件已经被移动或删除所致。
+> 重新安装WSL2：
+> `wsl --unregister Ubuntu-20.04`
+>
+> 重新安装即可
+
+
 
 ### **你需要做的操作**
 
