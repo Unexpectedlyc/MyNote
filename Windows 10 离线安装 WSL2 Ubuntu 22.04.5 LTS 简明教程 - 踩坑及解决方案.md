@@ -1,17 +1,5 @@
 # Windows 10 离线安装 WSL2 Ubuntu 22.04.5 LTS 简明教程 - 踩坑及解决方案
 
-### **背景**
-
-近期开始探索在WIndows PC上通过[LMDeploy](https://zhida.zhihu.com/search?content_id=253789255&content_type=Article&match_order=1&q=LMDeploy&zhida_source=entity)运行本地部署的[Deepseek-R1](https://zhida.zhihu.com/search?content_id=253789255&content_type=Article&match_order=1&q=Deepseek-R1&zhida_source=entity)模型。前置步骤需要用[WSL2](https://zhida.zhihu.com/search?content_id=253789255&content_type=Article&match_order=1&q=WSL2&zhida_source=entity) Ubuntu。把流程教程和踩坑及解决方案发出来供后人参考。
-
-到在 Windows 10 专业版（版本 19044.3086）环境中，因网络问题叠加本地WSL安装错误（错误代码 `0xc8000641`）无法通过在线命令 `wsl --install` 完成安装。通过手动下载 WSL 镜像并离线导入，成功部署 Ubuntu 22.04.5 LTS。以下是完整操作流程：
-
-本教程适用于当你无法使用以下命令成功安装Ubuntu .
-
-```text
-wsl --install -d Ubuntu-22.04
-```
-
 ### **一、准备工作**
 
 ### 1. **系统要求**
@@ -32,11 +20,9 @@ wsl --install -d Ubuntu-22.04
 >
 > 如何查看虚拟化是否开启
 >
-> ![在这里插入图片描述](https://i-blog.csdnimg.cn/direct/dc5c7d26ef35470fbe6371f78c08f911.png)
-
-![img](https://pic4.zhimg.com/v2-8af2b8587b51dfb80ab8a9132e2f4413_1440w.jpg)
-
-![img](https://pica.zhimg.com/v2-0947d2483b3bd36c523f1326592d296a_1440w.jpg)
+> ![在这里插入图片描述](https://i->blog.csdnimg.cn/direct/dc5c7d26ef35470fbe6371f78c08f911.png)
+>![img](https://pic4.zhimg.com/v2-8af2b8587b51dfb80ab8a9132e2f4413_1440w.jpg)
+>![img](https://pica.zhimg.com/v2-0947d2483b3bd36c523f1326592d296a_1440w.jpg)
 
 **确认 BIOS 中已启用虚拟化支持**
 进入 BIOS 设置，确保**虚拟化技术**（VT-x/AMD-V）已启用。
@@ -51,17 +37,21 @@ Linux 内核更新包安装最新版本的 [WSL 2 Linux 内核](https://github.c
 
    - [WSL2 Linux 内核更新包适用于 x64 计算机](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi)
 
-    备注
+   > [!NOTE]
+   >
+   > 如果使用 ARM64 计算机，请改为下载 [ARM64 包](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_arm64.msi)。 如果不确定拥有哪种计算机，请打开命令提示符或 PowerShell 并输入：`systeminfo | find "System Type"`。 **注意事项：** 非英语 Windows 版本中，可能需要修改搜索文本，翻译“系统类型”字符串。 你可能还需要对引号进行转义来用于 find 命令。 例如，在德语版中使用 `systeminfo | find '"Systemtyp"'`。
 
-   如果使用 ARM64 计算机，请改为下载 [ARM64 包](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_arm64.msi)。 如果不确定拥有哪种计算机，请打开命令提示符或 PowerShell 并输入：`systeminfo | find "System Type"`。 **注意事项：** 非英语 Windows 版本中，可能需要修改搜索文本，翻译“系统类型”字符串。 你可能还需要对引号进行转义来用于 find 命令。 例如，在德语版中使用 `systeminfo | find '"Systemtyp"'`。
+   
 
 2. 运行在上一步中下载的更新包。 （双击以运行 - 系统会提示你输入提升的权限，选择“是”以批准此安装。
 
 安装完成后，转到下一步 - 在安装新的 Linux 分发版时将 WSL 2 设置为默认版本。 （如果希望将新的 Linux 安装设置为 WSL 1，请跳过此步骤）。
 
- 备注
+> [!NOTE]
+>
+> 有关详细信息，请参阅 [Windows 命令行博客](https://devblogs.microsoft.com/commandline/wsl2-will-be-generally-available-in-windows-10-version-2004)上的文章[对更新 WSL2 Linux 内核的更改](https://aka.ms/cliblog)。
 
-有关详细信息，请参阅 [Windows 命令行博客](https://devblogs.microsoft.com/commandline/wsl2-will-be-generally-available-in-windows-10-version-2004)上的文章[对更新 WSL2 Linux 内核的更改](https://aka.ms/cliblog)。
+
 
 ### 2. 将 WSL 2 设置为默认版本
 
