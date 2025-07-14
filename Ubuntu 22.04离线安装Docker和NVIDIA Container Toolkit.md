@@ -88,7 +88,7 @@ sudo systemctl enable docker
 
 ## 二、离线安装NVIDIA Container Toolkit
 
-### 1. 在NVIDIA的[GitHub主页](https://link.zhihu.com/?target=https%3A//github.com/NVIDIA/libnvidia-container/tree/gh-pages/stable/deb/amd64)找到Ubuntu系统对应的NVIDIA Container Toolkit安装包
+### 1. 在NVIDIA的[GitHub主页](https://github.com/NVIDIA/libnvidia-container/tree/gh-pages/stable/deb/amd64)找到Ubuntu系统对应的NVIDIA Container Toolkit安装包
 
 该页面的安装包较多，搜索关键词“1.14.1”，下载所有含有“1.14.1”的安装包，安装包的说明如下
 
@@ -139,6 +139,14 @@ sudo systemctl restart docker
 ```
 
 ![img](https://pic3.zhimg.com/v2-08ffa3a4726a1811dfb7338758c0924e_1440w.jpg)
+
+> [!CAUTION]
+>
+> [修复 "System has not been booted with systemd as init system "的错误。](https://www.cnblogs.com/a5idc/p/13752839.html)
+>
+> ![](systemd2sysvinit.jpg)
+
+
 
 ## 三、迁移Docker镜像
 
