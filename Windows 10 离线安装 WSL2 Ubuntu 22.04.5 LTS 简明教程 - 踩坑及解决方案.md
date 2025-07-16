@@ -20,9 +20,10 @@
 >
 > 如何查看虚拟化是否开启
 >
-> ![在这里插入图片描述](https://i->blog.csdnimg.cn/direct/dc5c7d26ef35470fbe6371f78c08f911.png)
->![img](https://pic4.zhimg.com/v2-8af2b8587b51dfb80ab8a9132e2f4413_1440w.jpg)
->![img](https://pica.zhimg.com/v2-0947d2483b3bd36c523f1326592d296a_1440w.jpg)
+> ![img](https://ask.qcloudimg.com/http-save/yehe-1146354/1ru4gppxck.jpeg)
+>
+> ![img](https://pic4.zhimg.com/v2-8af2b8587b51dfb80ab8a9132e2f4413_1440w.jpg)
+> ![img](https://pica.zhimg.com/v2-0947d2483b3bd36c523f1326592d296a_1440w.jpg)
 
 **确认 BIOS 中已启用虚拟化支持**
 进入 BIOS 设置，确保**虚拟化技术**（VT-x/AMD-V）已启用。
@@ -63,7 +64,7 @@ PowerShell复制
 wsl --set-default-version 2
 ```
 
-### 2. **获取官方镜像**
+### 3. **获取官方镜像**
 
 - **下载地址**：
   [Ubuntu 22.04 WSL ](https://learn.microsoft.com/en-us/windows/wsl/)- Windows Subsystem for Linux Documentation
@@ -71,7 +72,7 @@ wsl --set-default-version 2
   - [Ubuntu 22.04.5 LTS - Free download and install on Windows | Microsoft Store](https://link.zhihu.com/?target=https%3A//apps.microsoft.com/detail/9pn20msr04dw%3Fhl%3Den-us%26gl%3DNZ)
   - [Ubuntu 22.04 LTS](https://link.zhihu.com/?target=https%3A//aka.ms/wslubuntu2204)（我所安装版本的文件直接下载路径）
 
-### 3. **保存镜像文件**
+### 4. **保存镜像文件**
 
 将下载的 `Ubuntu2204-221101.AppxBundle` 保存至本地路径（如 `C:\wsl\`）。
 
