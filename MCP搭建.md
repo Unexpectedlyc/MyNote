@@ -53,6 +53,11 @@ maven版本3.9.9
         <spring-ai.version>1.0.0</spring-ai.version>
     </properties>
     <dependencies>
+    	<!-- 如果是基于spring-mvc框架就是使用webmvc,不需要使用webflux,二选一 -->
+    	<dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-starter-mcp-server-webmvc</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-starter-mcp-server-webflux</artifactId>
@@ -65,12 +70,6 @@ maven版本3.9.9
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-starter-mcp-server</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
