@@ -38,7 +38,7 @@ vi ./configmaps/higress-config.yaml
 
 修改配置文件
 
-```
+```yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -52,8 +52,17 @@ data:
       sse_path_suffix: /sse  # SSE 连接的路径后缀
       enable: true          # 启用 MCP Server
       redis:
-        address: higress-redis:6379 # Redis服务地址。这里需要使用本机的内网 IP，不可以使用 127.0.0.1
+        address: IP:6379 # Redis服务地址。这里需要使用本机的内网 IP，不可以使用 127.0.0.1
+        username: "" # Redis用户名（可选）
+        password: "" # Redis密码（可选）
+        db: 0 # Redis数据库（可选）
+      match_list:          # MCP Server 会话保持路由规则（当匹配下面路径时，将被识别为一个 MCP 会话，通过 SSE 等机制进行会话保持,可选）
+        - match_rule_domain: "*"
+          match_rule_path: /user
+          match_rule_type: "prefix"
+      servers: []
     downstream:
+    # 以下配置无需修改，此处省略
 ```
 
 > [!NOTE]
@@ -85,6 +94,27 @@ docker run --name nacos \
     --network mcp \
     -d nacos-registry.cn-hangzhou.cr.aliyuncs.com/nacos/nacos-server:v3.0.1
 ```
+
+> [!NOTE]
+>
+> example
+>
+> ```
+> docker run --name nacos \
+>     -e MODE=standalone \
+>     -e NACOS_AUTH_TOKEN=U7bzqnaqqov0s/VsuBclzXKInNHjsmQ8c4b1bYZQ//0= \
+>     -e NACOS_AUTH_IDENTITY_KEY=123456 \
+>     -e NACOS_AUTH_IDENTITY_VALUE=123456 \
+>     -p 8081:8080 \
+>     -p 8848:8848 \
+>     -p 9848:9848 \
+>     --network mcp \
+>     -d nacos-registry.cn-hangzhou.cr.aliyuncs.com/nacos/nacos-server:v3.0.1
+> ```
+>
+> 
+
+
 
 ### 配置Higress 连接到Nacos mcp registry
 
