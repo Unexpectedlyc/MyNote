@@ -35,10 +35,10 @@ tar -xzf uv-x86_64-unknown-linux-gnu.tar.gz -C /usr/local/
 mv /usr/local/uv-x86_64-unknown-linux-gnu /usr/local/uv
 
 # 添加到环境变量（临时）
-export PATH="/usr/local/uv/bin:$PATH"
+export PATH="/usr/local/uv:$PATH"
 
 # 永久生效（添加到 ~/.bashrc 或 ~/.zshrc）
-echo 'export PATH="/usr/local/uv/bin:$PATH"' >> ~/.bashrc
+echo 'export PATH="/usr/local/uv:$PATH"' >> ~/.bashrc
 source ~/.bashrc
 ```
 
