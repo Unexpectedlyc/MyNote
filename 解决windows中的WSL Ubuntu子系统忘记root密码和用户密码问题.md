@@ -18,3 +18,9 @@
 5、运行passwd root 修改 root 密码
 
 ![在这里插入图片描述](https://i-blog.csdnimg.cn/blog_migrate/aaacd64c63a8bf8b15072f4a48dec7a6.png)
+
+```
+#设置默认启动的wsl2的系统
+wslconfig /setdefault <分发版名称>
+```
+
