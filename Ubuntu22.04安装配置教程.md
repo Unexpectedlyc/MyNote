@@ -40,11 +40,64 @@ sudo apt-get install open-vm-tools-desktop
 
 上面的指令是再次卸载，然后安装。指令执行完毕后，关闭虚拟机，再次重启，此时，多半会大功告成！如果还不行，请再次执行上面的指令。（再次提醒：不要直接点击重启，要先关闭虚拟机，然后再启动。）
 
-## 2.安装ssh,net-tools
+### 1.1更换国内镜像源
+
+1. 备份原有源文件
+
+在修改前，建议备份系统默认的 *sources.list* 文件，以便在需要时恢复：
+
+sudo cp /etc/apt/sources.list /etc/apt/sources.list.backup
+
+2. 编辑源文件
+
+使用文本编辑器打开 *sources.list* 文件：
+
+sudo vim /etc/apt/sources.list
+
+将文件中的内容全部注释或删除，然后添加以下清华源配置(下面是ubuntu22.04的配置)：
+
+```
+# 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse
+deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse
+deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse
+deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse
+
+# 以下安全更新软件源包含了官方源与镜像站配置，如有需要可自行修改注释切换
+deb http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse
+deb-src http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse
+
+# 预发布软件源，不建议启用
+# deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse
+```
+
+保存并退出编辑器。
+
+3. 更新软件包列表
+
+执行以下命令以更新软件包列表并升级系统：
+
+sudo apt update
+
+sudo apt upgrade
+
+注意事项
+
+- **版本代号匹配**：确保 *focal* 与您的 Ubuntu 版本代号一致（Ubuntu 20.04 的代号为 *focal*）。可以通过以下命令确认：
+
+lsb_release -c
+
+- **安全更新**：清华源同步可能存在延迟，建议保留官方安全更新源。
+
+## 2.安装ssh,net-tools,zip
 
 ```
 sudo apt-get install ssh openssh-server
 sudo apt-get install net-tools
+sudo apt-get install zip
 ```
 
 ## 3. 安装gcc和g++
@@ -53,9 +106,10 @@ sudo apt-get install net-tools
 
 ```
 sudo apt update
-sudo apt install build-essential
-sudo apt-get install libz-dev
-sudo apt-get install gettext
+sudo apt install build-essential libssl-dev zlib1g-dev libbz2-dev \
+                 libreadline-dev libsqlite3-dev wget curl llvm \
+                 libncursesw5-dev xz-utils tk-dev libxml2-dev \
+                 libxmlsec1-dev libffi-dev liblzma-dev
 ```
 
 回车运行等待即可。
