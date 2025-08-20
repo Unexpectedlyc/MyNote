@@ -45,9 +45,10 @@ pyenv --version
 
 linux/mac
 
-```
- export PYTHON_BUILD_MIRROR_URL="https://registry.npmmirror.com/-/binary/python"
- export PYTHON_BUILD_MIRROR_URL_SKIP_CHECKSUM=1
+```bash
+echo 'export PYTHON_BUILD_MIRROR_URL="https://registry.npmmirror.com/-/binary/python"' >> ~/.bashrc
+echo 'export PYTHON_BUILD_MIRROR_URL_SKIP_CHECKSUM=1' >> ~/.bashrc
+source ~/.bashrc
 ```
 
 windows
@@ -71,8 +72,9 @@ PYTHON_BUILD_MIRROR_URL=https://jedore.top/tools/python-mirrors/
 - 将下载的pyenv安装包解压到您希望安装的目录中。然后，您可以使用以下命令安装pyenv：
 
 ```bash
-cd /path/to/pyenv
-./install.sh
+# 解压到指定目录
+tar -xzf pyenv-2.6.7.tar.gz -C /usr/local/
+mv /usr/local/pyenv-2.6.7 /usr/local/pyenv
 ```
 
 安装完成后，您需要将pyenv的路径添加到您的bash配置文件中（例如`.bashrc`或`.bash_profile`）
@@ -82,9 +84,8 @@ cd /path/to/pyenv
 - 编辑`~/.bashrc`文件，添加以下行以便每次打开终端时加载pyenv：
 
 ```bash
-export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init --path)"
-eval "$(pyenv init -)"
+echo 'export PATH="/usr/local/pyenv/bin:$PATH"' >> ~/.bashrc
+echo 'export PATH="/root/.pyenv:$PATH"' >> ~/.bashrc
 ```
 
 - 保存文件后，运行以下命令使更改生效：
